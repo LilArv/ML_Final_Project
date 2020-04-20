@@ -2,13 +2,13 @@
 
 ### The Model:
 
-The classifier we chose for this project is a Convolutional Nerual Net (CNN). These tend to perform well in image-recognition tasks and we were able to achieve very close to 90% testing accuracy without doing a whole lot of pre-processing. Our CNN has 3 convolutional layers and uses a kernel size of 3 in each layer, followed by two linear layers, then the output layer which uses the softmax activation function. We chose Cross-Entropy loss to be the loss function. 
+The classifier we chose for this project is a Convolutional Nerual Net (CNN). These tend to perform well in image-recognition tasks and we were able to achieve very close to 90% testing accuracy without doing a whole lot of pre-processing. Our CNN has 3 convolutional layers which each use a kernel size of 3 in each layer. There are ReLu activations and 2D max pooling layers between each convolutional layer. Next are two linear layers, then the output layer which uses the softmax activation function. We chose Cross-Entropy loss to be the loss function. 
 
-After transforming the provdied data to be grayscale, encoding outputs to be integers 1-9, and partitioning into training and validation sets, we trained our model for 1000 epochs using a batch size of 128 and an initial learning rate of 0.001. The pre-trained model we load in the TestFunction is called CNN_23 and was trained in this fashion.
+After transforming the provdied data to be grayscale, encoding outputs to be integers, and partitioning into training and validation sets, we trained our model for 1000 epochs using a batch size of 128 and an initial learning rate of 0.001. The pre-trained model we load in the TestFunction is called CNN_23 and was trained in this fashion.
 
 ### The Pipeline:
 
-In our pipeline (the code file is called *ASL_Classifier.ipynb*), we first import the required libraries, then define the CNN class for the CNN described above, and then we define the following functions:
+In our pipeline (the code file is called **ASL_Classifier.ipynb**), we first import the required libraries, then define the CNN class for the CNN described above, and then we define the following functions:
 
 ##### PreProcess(data, labels):
 
@@ -30,9 +30,9 @@ This function will take the predicted-labels-as-numbers output of the EvaluateMo
 
 #### TrainFunction(X, y):
 
-This is one of the two main functions. It will take in the training data as an Mx100x100x3 matrix of images with their corresponding labels. It then does pre-processing on that dataset using the PreProcess function, returning X_train and y_train as tensors. We then initialize an untrained model and then proceed to call the TrainModel function with the same parameters that we used in generating our final model. We then rename the newly-trained model and return it from this function.
+This is one of the two main functions. It will take in the training data as an Mx100x100x3 matrix of images with their corresponding Mx1 labels. It then does pre-processing on that dataset using the PreProcess function, returning X_train and y_train as tensors. We then initialize an untrained model and then proceed to call the TrainModel function with the same parameters that we used in generating our final model. We then rename the newly-trained model and return it from this function.
 
 
 #### TestFunction(X, y):
 
-This is the other of the two main functions. It takes in the test data as an Mx100x100x3 matrix of images with their corresponding labels. It then does pre-processing on that dataset using the PreProcess function, returning X_test and y_test as tensors. Next we load in our pretrained model. If we want to use a different model, we can load one that had been previously saved via torch.save() or we can use a newly-trained model from the output of the TrainFunction. We then get the testing accuracy and predicted-labels-as-numbers by calling the EvaluateModel function. Finally, we use the PostProcess function to transform the predicted-labels-as-numbers to letters, and then return the aforementioned testing accuracy and predicted-labels-as-letters.
+This is the other of the two main functions. It takes in the test data as an Mx100x100x3 matrix of images with their corresponding Mx1 labels. It then does pre-processing on that dataset using the PreProcess function, returning X_test and y_test as tensors. Next we load in our pretrained model. If we want to use a different model, we can load one that had been previously saved via torch.save() or we can use a newly-trained model from the output of the TrainFunction. We then get the testing accuracy and predicted-labels-as-numbers by calling the EvaluateModel function. Finally, we use the PostProcess function to transform the predicted-labels-as-numbers to letters, and then return the aforementioned testing accuracy and predicted-labels-as-letters.
